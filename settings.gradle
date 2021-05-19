@@ -1,0 +1,2 @@
+rootProject.name = "Mouseguard Sheet Manager"
+include ':app'
