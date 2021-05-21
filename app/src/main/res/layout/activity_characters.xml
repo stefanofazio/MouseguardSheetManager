@@ -5,31 +5,26 @@
     android:background="@color/burntPaper"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ModeActivity">
+    tools:context=".CharactersActivity">
 
-    <ImageButton
-        android:id="@+id/sheetButton"
+    <ListView
+        android:id="@+id/charsListView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHeight_percent=".5"
-        app:layout_constraintHeight_default="percent"
-        android:onClick="getClick"
-        android:contentDescription="sheets"
+        app:layout_constraintHeight_percent="0.9"
         />
 
-    <ImageButton
-        android:id="@+id/gameButton"
+    <Button
+        android:id="@+id/charsButton"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@+id/sheetButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/charsListView"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHeight_percent=".5"
-        app:layout_constraintHeight_default="percent"
-        android:onClick="getClick"
-        android:contentDescription="games"
+        app:layout_constraintHeight_percent="0.1"
         />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
