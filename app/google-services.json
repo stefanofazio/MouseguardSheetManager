@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "423948471420",
+    "firebase_url": "https://mouseguard-sheet-manager-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "mouseguard-sheet-manager",
+    "storage_bucket": "mouseguard-sheet-manager.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:423948471420:android:58015da53373783f244df9",
+        "android_client_info": {
+          "package_name": "com.example.mouseguardsheetmanager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "423948471420-b6rt470lmlrh9ko7414dr1jjp504nekn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAobHqQLIKvIrbwKxLjPTk5oF1HX8hDro8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "423948471420-b6rt470lmlrh9ko7414dr1jjp504nekn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

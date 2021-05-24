@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Mouseguard Sheet Manager</string>
+    <string name="title_activity_login">Login</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="login">Log in</string>
+    <string name="welcome">Benvenuto!</string>
+    <string name="invalid_username">Username non valido</string>
+    <string name="invalid_password">La password non può essere vuota</string>
+    <string name="login_failed">Login fallito</string>
+    <string name="create_account">Crea un account</string>
+    <string name="already_have_account">Hai già un account?</string>
+    <string name="prompt_userName">Username</string>
+    <string name="authentication_failed">Autenticazione fallita</string>
+</resources>
