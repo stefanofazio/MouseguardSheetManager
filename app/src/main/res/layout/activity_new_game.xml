@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/burntPaper"
+    tools:context=".NewGameActivity">
+
+    <EditText
+        android:id="@+id/newGameNameEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.75"
+        android:hint="@string/gameName"
+        android:layout_marginTop="40dp"
+        />
+
+    <EditText
+        android:id="@+id/gameUidEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newGameNameEditText"
+        app:layout_constraintWidth_percent="0.75"
+        android:hint="@string/gameUID"
+        android:layout_marginTop="30dp"
+        android:inputType="none"
+        />
+
+    <EditText
+        android:id="@+id/playerNumberEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/gameUidEditText"
+        app:layout_constraintWidth_percent="0.30"
+        android:hint="@string/playerNumber"
+        android:layout_marginTop="30dp"
+        android:inputType="none"
+        />
+
+    <Button
+        android:id="@+id/newGameFunctionButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:hint="@string/createGame"
+        android:onClick="newGameFunction"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

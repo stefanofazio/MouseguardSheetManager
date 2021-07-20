@@ -13,4 +13,10 @@
     <string name="already_have_account">Hai già un account?</string>
     <string name="prompt_userName">Username</string>
     <string name="authentication_failed">Autenticazione fallita</string>
+    <string name="sheets">Schede</string>
+    <string name="join">Unisciti</string>
+    <string name="createGame">Crea Partita</string>
+    <string name="gameName">Nome partita</string>
+    <string name="playerNumber">Numero giocatori</string>
+    <string name="gameUID">ID partita</string>
 </resources>

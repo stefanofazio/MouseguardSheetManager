@@ -1,6 +1,7 @@
 package com.example.mouseguardsheetmanager
 
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,20 +11,35 @@ import android.widget.BaseAdapter
 import android.widget.Button
 import android.widget.ListView
 import android.widget.TextView
+import com.google.firebase.database.FirebaseDatabase
 
 class GameActivity : AppCompatActivity() {
     private lateinit var gamesList:ListView
     private lateinit var gamesButton: Button
+    private lateinit var mDatabase:FirebaseDatabase
     private var role: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
         gamesList = findViewById(R.id.gamesListView)
         gamesButton = findViewById(R.id.gamesButton)
         role = intent.getStringExtra("role").toString()
+        mDatabase = FirebaseDatabase.getInstance()
         setButtonText()
-        setListViewContent()
+        //setListViewContent()
+    }
+
+    fun gamesButton(view:View?)
+    {
+        if (role.equals("master"))
+        {
+            val intent = Intent(this, NewGameActivity::class.java)
+            intent.putExtra("role", role)
+            startActivity(intent)
+            finish()
+        }
     }
 
     private fun setButtonText()

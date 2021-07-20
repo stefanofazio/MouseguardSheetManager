@@ -25,6 +25,7 @@
         app:layout_constraintTop_toBottomOf="@id/gamesListView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHeight_percent="0.1"
+        android:onClick="gamesButton"
         />
 
 

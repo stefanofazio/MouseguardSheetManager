@@ -12,4 +12,10 @@
     <string name="already_have_account">Already have an account?</string>
     <string name="prompt_userName">Username</string>
     <string name="authentication_failed">Authentication failed</string>
+    <string name="sheets">Sheets</string>
+    <string name="join">Join</string>
+    <string name="createGame">Create game</string>
+    <string name="gameName">Game name</string>
+    <string name="playerNumber">Player number</string>
+    <string name="gameUID">Game\'s ID</string>
 </resources>
