@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.EditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.google.gson.Gson
 
 class NewGameActivity : AppCompatActivity() {
 
@@ -108,7 +109,9 @@ class NewGameActivity : AppCompatActivity() {
     private fun InsertNewGame(newGame:GameClass)
     {
         newGame.addPlayer("Beatrice", "beatrice@email.it")
-        mDatabase.child("Games").child(newGame.gameName()).setValue(newGame).addOnCompleteListener(this) { task2 ->
+        var gson = Gson()
+        val jsonGame = gson.toJson(newGame)
+        mDatabase.child("Games").child(newGame.gameName()).setValue(jsonGame).addOnCompleteListener(this) { task2 ->
             if (task2.isSuccessful) {
                 Log.w("succ","success")
             }

@@ -1,4 +1,5 @@
 import android.provider.ContactsContract
+import java.security.acl.Owner
 
 class GameClass {
     var gameName:String = ""
@@ -18,6 +19,14 @@ class GameClass {
         players = HashMap()
         players["Serena"] = "serena@email.it"
         players["stefano"] = "stefano@email.it"
+    }
+
+    constructor(GameName:String, OwnerName:String, OwnerEmail:String, Players:HashMap<String, String>)
+    {
+        this.gameName = GameName
+        this.gameOwnerName = OwnerName
+        this.gameOwnerEmail = OwnerEmail
+        this.players = Players
     }
 
     fun gameName() : String

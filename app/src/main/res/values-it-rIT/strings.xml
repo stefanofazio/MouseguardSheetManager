@@ -16,7 +16,8 @@
     <string name="sheets">Schede</string>
     <string name="join">Unisciti</string>
     <string name="createGame">Crea Partita</string>
-    <string name="gameName">Nome partita</string>
-    <string name="playerNumber">Numero giocatori</string>
-    <string name="gameUID">ID partita</string>
+    <string name="gameName">Nome partita:  %1$s</string>
+    <string name="playerNumber">Numero giocatori: %1$s</string>
+    <string name="gameUID">ID partita: %1$s</string>
+    <string name="masterName">Nome master: %1$s</string>
 </resources>
