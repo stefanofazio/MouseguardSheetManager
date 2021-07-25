@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/burntPaper"
-    tools:context=".NewGameActivity">
+    tools:context=".JoinGameActivity">
 
     <EditText
-        android:id="@+id/newGameNameEditText"
+        android:id="@+id/gameUidEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,28 +19,14 @@
         android:layout_marginTop="40dp"
         />
 
-    <EditText
-        android:id="@+id/playerNumberEditText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/newGameNameEditText"
-        app:layout_constraintWidth_percent="0.30"
-        android:hint="@string/playerNumber"
-        android:layout_marginTop="30dp"
-        android:inputType="none"
-        />
-
     <Button
-        android:id="@+id/newGameFunctionButton"
+        android:id="@+id/joinGameFunctionButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:hint="@string/createGame"
-        android:onClick="newGameFunction"
+        android:onClick="joinGame"
         />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

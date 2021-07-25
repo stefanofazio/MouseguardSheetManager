@@ -15,6 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         />
+
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier"
         android:layout_width="wrap_content"
@@ -26,7 +27,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         />
     <TextView
-        android:id="@+id/characterName"
+        android:id="@+id/character_Name"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         app:layout_constraintWidth_percent="0.7"
@@ -36,13 +37,13 @@
         />
 
     <TextView
-        android:id="@+id/mantleColor"
+        android:id="@+id/mantle_Color"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         app:layout_constraintWidth_percent="0.7"
         app:layout_constraintHeight_percent="0.5"
         app:layout_constraintStart_toStartOf="@+id/barrier"
-        app:layout_constraintTop_toBottomOf="@+id/characterName"
+        app:layout_constraintTop_toBottomOf="@+id/character_Name"
         app:layout_constraintBottom_toBottomOf="parent"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

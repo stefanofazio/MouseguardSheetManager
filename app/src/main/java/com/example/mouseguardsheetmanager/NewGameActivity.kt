@@ -1,6 +1,7 @@
 package com.example.mouseguardsheetmanager
 
 import GameClass
+import Utils
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -9,9 +10,13 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import androidx.core.view.isVisible
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.gson.Gson
+import java.math.BigInteger
+import java.security.MessageDigest
+import kotlin.random.Random
 
 class NewGameActivity : AppCompatActivity() {
 
@@ -32,6 +37,9 @@ class NewGameActivity : AppCompatActivity() {
         functionButton = findViewById(R.id.newGameFunctionButton)
         newGameName = findViewById(R.id.newGameNameEditText)
         numberOfPlayers = findViewById(R.id.playerNumberEditText)
+
+        uidEditText.isVisible = false
+        numberOfPlayers.isVisible = false
 
         mDatabase = FirebaseDatabase.getInstance().reference
         mAuth = FirebaseAuth.getInstance()
@@ -94,6 +102,7 @@ class NewGameActivity : AppCompatActivity() {
                     val ownerName = snapshot.getValue().toString()
                     numberOfPlayers.setText(snapshot.getValue().toString())
                     var newGame = GameClass(newName, ownerName, ownerEmail)
+                    newGame.gameID = Utils.IDGeneration(newName.toString())
                     InsertNewGame(newGame)
                 }
 
@@ -106,14 +115,24 @@ class NewGameActivity : AppCompatActivity() {
         }
     }
 
+
+
+    private fun MD5(item: String) : String
+    {
+        val md = MessageDigest.getInstance("MD5")
+        return BigInteger(1, md.digest(item.toByteArray())).toString(16).padStart(10, '0')
+    }
+
     private fun InsertNewGame(newGame:GameClass)
     {
         newGame.addPlayer("Beatrice", "beatrice@email.it")
         var gson = Gson()
         val jsonGame = gson.toJson(newGame)
-        mDatabase.child("Games").child(newGame.gameName()).setValue(jsonGame).addOnCompleteListener(this) { task2 ->
+        //val hash = gson.fromJson(jsonGame, new TypeToken<HashMap<String, Object>>() {}.getType)
+        mDatabase.child("Games").child(newGame.gameID).setValue(newGame).addOnCompleteListener(this) { task2 ->
             if (task2.isSuccessful) {
                 Log.w("succ","success")
+                finish()
             }
             else {
                 Log.w(

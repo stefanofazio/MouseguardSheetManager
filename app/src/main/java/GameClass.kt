@@ -5,6 +5,7 @@ class GameClass {
     var gameName:String = ""
     var gameOwnerName:String = ""
     var gameOwnerEmail:String = ""
+    var gameID:String = "0"
     lateinit var players: HashMap<String, String>
 
     constructor()
@@ -17,8 +18,6 @@ class GameClass {
         this.gameOwnerName = ownerName
         this.gameOwnerEmail = ownerEmail
         players = HashMap()
-        players["Serena"] = "serena@email.it"
-        players["stefano"] = "stefano@email.it"
     }
 
     constructor(GameName:String, OwnerName:String, OwnerEmail:String, Players:HashMap<String, String>)

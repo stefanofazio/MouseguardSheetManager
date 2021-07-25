@@ -7,14 +7,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.Button
-import android.widget.ListView
-import android.widget.TextView
 import GameClass
+import Utils
+import android.graphics.Paint
+import android.nfc.NfcAdapter
 import android.util.Log
+import android.widget.*
 import com.google.firebase.database.*
 import com.google.gson.Gson
+import kotlinx.coroutines.selects.select
 
 
 class GameActivity : AppCompatActivity() {
@@ -37,6 +38,7 @@ class GameActivity : AppCompatActivity() {
         mDatabase = FirebaseDatabase.getInstance().reference
         setButtonText()
         SetEventListener()
+        SetListListeners()
         //SetListContentView()
     }
 
@@ -47,16 +49,7 @@ class GameActivity : AppCompatActivity() {
             val intent = Intent(this, NewGameActivity::class.java)
             intent.putExtra("role", role)
             startActivity(intent)
-            finish()
         }
-    }
-
-    private fun AdaptToJSON(startingJSON : String) : String
-    {
-        var newJSON = startingJSON.removePrefix("DataSnapshot {")
-        newJSON = newJSON.removeSuffix("}")
-        newJSON = newJSON.removeRange(0, newJSON.indexOf("{"))
-        return newJSON
     }
 
     private fun setButtonText()
@@ -65,26 +58,31 @@ class GameActivity : AppCompatActivity() {
         else { gamesButton.text = "Unisciti" }
     }
 
+    private fun SetListListeners()
+    {
+        gamesList.onItemClickListener = AdapterView.OnItemClickListener{
+            parent, view, position, id ->
+            val selectedGame = games[position]
+            doThingsWithGame(selectedGame)
+        }
+    }
+
+
+
     private fun SetEventListener()
     {
         val nameListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val presentGames = mutableListOf<GameClass>()
-                /*var tmpGameClass = GameClass()
-                var tmpString = AdaptToJSON(snapshot.child("Ahah").toString())
-                tmpGameClass = gson.fromJson<GameClass>(tmpString, GameClass::class.java)
-                //snapshot.child("Prima")
-                presentGames.add(tmpGameClass)*/
                for (i in snapshot.children)
                 {
                     var tmpGame = GameClass()
-                    tmpGame = gson.fromJson<GameClass>(AdaptToJSON((i).toString()), GameClass::class.java)
+                    val tmpJson = Utils.AdaptToJSON(i.toString())
+                    tmpGame = gson.fromJson<GameClass>(tmpJson, GameClass::class.java)
                     presentGames.add(tmpGame)
                 }
                 games = presentGames
                 SetListContentView()
-                //var myAdapter : GameAdapter = GameAdapter(parent.baseContext, presentGames)
-                //gamesList.adapter = myAdapter
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -101,7 +99,37 @@ class GameActivity : AppCompatActivity() {
         var myAdapter = GameAdapter(this, games)
         gamesList.adapter = myAdapter
     }
+
+    private fun doThingsWithGame(game : GameClass)
+    {
+        if (role.equals("master"))
+        {
+            OpenGameForMaster(game)
+        }
+        else
+        {
+            OpenGameForPlayer(game)
+        }
+    }
+
+    private fun OpenGameForMaster(game : GameClass)
+    {
+        val intent = Intent(this, SheetActivity::class.java)
+        intent.putExtra("gameID", game.gameID)
+        intent.putExtra("role", "master")
+        startActivity(intent)
+    }
+
+    private fun OpenGameForPlayer(game: GameClass)
+    {
+        val intent = Intent(this, JoinGameActivity::class.java)
+        intent.putExtra("gameID", game.gameID)
+        intent.putExtra("role", "player")
+        startActivity(intent)
+    }
 }
+
+
 
 class GameAdapter(private val context: Context, private val elements: List<GameClass>) : BaseAdapter()
 {
@@ -119,7 +147,7 @@ class GameAdapter(private val context: Context, private val elements: List<GameC
 
     override fun getView(Position: Int, convertView: View?, parent: ViewGroup?): View {
         val rowView = LayoutInflater.from(context).inflate(R.layout.game_row, parent, false)
-        val game = elements.get(Position)
+        val game = elements[Position]
         var gameName: TextView = rowView.findViewById(R.id.gameNameText)
         var masterName: TextView = rowView.findViewById(R.id.masterNameText)
         var playerNumber: TextView = rowView.findViewById(R.id.playerNumberText)

@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import org.w3c.dom.Text
 
 class CharactersActivity : AppCompatActivity() {
     private lateinit var charsList: ListView
@@ -48,8 +47,8 @@ class CharactersActivity : AppCompatActivity() {
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
             val rowView = LayoutInflater.from(context).inflate(R.layout.sheet_row, parent, false)
-            var charName: TextView = rowView.findViewById(R.id.characterName)
-            var mantleColor: TextView = rowView.findViewById(R.id.mantleColor)
+            var charName: TextView = rowView.findViewById(R.id.character_Name)
+            var mantleColor: TextView = rowView.findViewById(R.id.mantle_Color)
             var charPic: ImageView = rowView.findViewById(R.id.characterPic)
             charName.text = "Personaggio numero " + position.toString()
             mantleColor.text = colors[(0..2).random()]
