@@ -13,7 +13,6 @@
         <activity android:name=".JoinGameActivity" />
         <activity android:name=".NewGameActivity" />
         <activity android:name=".SigninActivity" />
-        <activity android:name=".CharactersActivity" />
         <activity android:name=".GameActivity" />
         <activity android:name=".ModeActivity" />
         <activity android:name=".LoginActivity">

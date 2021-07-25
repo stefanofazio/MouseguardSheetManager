@@ -39,7 +39,6 @@ class GameActivity : AppCompatActivity() {
         setButtonText()
         SetEventListener()
         SetListListeners()
-        //SetListContentView()
     }
 
     fun gamesButton(view:View?)

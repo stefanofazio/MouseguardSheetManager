@@ -2,6 +2,7 @@ import android.provider.ContactsContract
 import java.security.acl.Owner
 
 class Sheet {
+    var sheetID : String = "0"
     var characterName:String = ""
     var characterSecondName:String = ""
     var mantleColor:String = ""
@@ -15,8 +16,9 @@ class Sheet {
 
     }
 
-    constructor(name : String, secondName:String, mantle : String, owner : String, email : String)
+    constructor(id:String, name : String, secondName:String, mantle : String, owner : String, email : String)
     {
+        this.sheetID = id
         this.characterName = name
         this.characterSecondName = secondName
         this.mantleColor = mantle
@@ -26,8 +28,9 @@ class Sheet {
         stats = HashMap()
     }
 
-    constructor(name : String, secondName:String, mantle : String, owner : String, email : String, games : HashMap<String, String>, skills : HashMap<String, Int>)
+    constructor(id:String, name : String, secondName:String, mantle : String, owner : String, email : String, games : HashMap<String, String>, skills : HashMap<String, Int>)
     {
+        this.sheetID = id
         this.characterName = name
         this.characterSecondName = secondName
         this.mantleColor = mantle

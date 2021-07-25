@@ -6,12 +6,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.TextView
 import Sheet
+import android.content.Intent
 import android.util.Log
-import android.widget.ImageView
-import android.widget.ListView
+import android.widget.*
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.gson.Gson
 
@@ -19,7 +18,9 @@ class SheetActivity : AppCompatActivity() {
 
     private lateinit var role : String
     private lateinit var gameID : String
+
     private lateinit var mDatabase: DatabaseReference
+    private lateinit var mAuth: FirebaseAuth
 
     private lateinit var sheetListView: ListView
     private var sheets = mutableListOf<Sheet>()
@@ -33,21 +34,22 @@ class SheetActivity : AppCompatActivity() {
         role = intent.getStringExtra("role").toString()
 
         mDatabase = FirebaseDatabase.getInstance().reference
+        mAuth = FirebaseAuth.getInstance()
 
         if (role.equals("master")) {
             gameID = intent.getStringExtra("gameID").toString()
-            writedummysheet()
-            setGameSheetListener(gameID)
+            setGameSheetListener(gameID, "")
         }
         else {
             gameID = ""
+            setGameSheetListener(gameID, mAuth.currentUser?.email)
         }
 
 
 
     }
 
-    private fun writedummysheet()
+    /*private fun writedummysheet()
     {
         val tmpSheet = Sheet("alex","Rufus",  "Red", "Beatrice", "Beatrice@email.it")
         tmpSheet.addToGame("eueeofBo")
@@ -65,9 +67,26 @@ class SheetActivity : AppCompatActivity() {
                 )
             }
         }
+    }*/
+
+    private fun SetListListeners()
+    {
+        sheetListView.onItemClickListener = AdapterView.OnItemClickListener{
+                parent, view, position, id ->
+            val selectedSheet = sheets[position]
+            openSheet(selectedSheet)
+        }
     }
 
-    private fun setGameSheetListener(id : String)
+    private fun openSheet(sheet : Sheet)
+    {
+        val intent = Intent(this, SheetActivity::class.java)
+        intent.putExtra("sheetID", sheet.sheetID)
+        intent.putExtra("role", role)
+        startActivity(intent)
+    }
+
+    private fun setGameSheetListener(id : String, email : String?)
     {
         val sheetListener = object : ValueEventListener
         {
@@ -77,8 +96,15 @@ class SheetActivity : AppCompatActivity() {
                     var tmpSheet = Sheet()
                     val tmpJson = Utils.AdaptToJSON(i.toString())
                     tmpSheet = gson.fromJson<Sheet>(tmpJson, Sheet::class.java)
-                    if (tmpSheet.usedInGames.containsKey(id)) {
-                        allSheets.add(tmpSheet)
+                    if (!email.isNullOrEmpty())
+                    {
+                        if (tmpSheet.ownerEmail.equals(email))
+                            allSheets.add(tmpSheet)
+                    }
+                    else
+                    {
+                        if (tmpSheet.usedInGames.containsKey(id))
+                            allSheets.add(tmpSheet)
                     }
                 }
                 sheets = allSheets

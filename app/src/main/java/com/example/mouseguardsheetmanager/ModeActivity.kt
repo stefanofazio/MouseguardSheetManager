@@ -25,7 +25,7 @@ class ModeActivity : AppCompatActivity() {
         }
         else
         {
-            gameIntent = Intent(this, CharactersActivity::class.java)
+            gameIntent = Intent(this, SheetActivity::class.java)
             gameIntent.putExtra("role", role)
         }
         startActivity(gameIntent)
