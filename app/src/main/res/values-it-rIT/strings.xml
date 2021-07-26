@@ -20,4 +20,13 @@
     <string name="playerNumber">Numero giocatori: %1$s</string>
     <string name="gameUID">ID partita: %1$s</string>
     <string name="masterName">Nome master: %1$s</string>
+    <string name="character_name">Nome personaggio</string>
+    <string name="character_second_name">Cognome personaggio</string>
+    <string name="stats">Statistiche</string>
+    <string name="add_character_pic">Icona personaggio</string>
+    <string name="confirm_sheet">Conferma scheda</string>
+    <string name="red">Rosso</string>
+    <string name="green">Verde</string>
+    <string name="yellow">Giallo</string>
+    <string name="black">Nero</string>
 </resources>

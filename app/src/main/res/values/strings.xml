@@ -19,4 +19,13 @@
     <string name="playerNumber">Player number: %1$s</string>
     <string name="gameUID">Game\'s ID: %1$s</string>
     <string name="masterName">Master\'s name: %1$s</string>
+    <string name="character_name">Character name</string>
+    <string name="character_second_name">Character second name</string>
+    <string name="stats">Stats</string>
+    <string name="add_character_pic">Character picture</string>
+    <string name="confirm_sheet">Confirm sheet</string>
+    <string name="red">Red</string>
+    <string name="green">Green</string>
+    <string name="yellow">Yellow</string>
+    <string name="black">Black</string>
 </resources>
