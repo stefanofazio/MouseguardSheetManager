@@ -16,6 +16,8 @@ import com.google.firebase.database.ValueEventListener
 import Sheet
 import com.google.gson.Gson
 import Utils
+import android.app.Activity
+import android.content.Intent
 
 class SheetEditActivity : AppCompatActivity() {
 
@@ -108,8 +110,24 @@ class SheetEditActivity : AppCompatActivity() {
         }
     }
 
+
+
     fun openStats(view:View?)
     {
+        var intent = Intent(this, StatsActivity::class.java)
+        intent.putExtra("stats", currentSheet.stats)
+        startActivityForResult(intent, 1)
+    }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 1)
+        {
+            if (resultCode == Activity.RESULT_OK)
+            {
+                var newStats : HashMap<String, Int> = data?.getSerializableExtra("stats") as HashMap<String, Int>
+                currentSheet.stats = newStats
+            }
+        }
     }
 }
