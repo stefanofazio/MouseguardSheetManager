@@ -25,6 +25,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/characterPicImageView"
         app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center_horizontal"
         />
 
     <EditText
@@ -35,15 +36,29 @@
         app:layout_constraintTop_toBottomOf="@id/charNameEditText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center_horizontal"
         />
+
+    <TextView
+        android:id="@+id/mantleColorText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="@string/mantle_color"
+        app:layout_constraintWidth_percent="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/charSecondNameEditText"
+        />
+
 
     <Spinner
         android:id="@+id/mantleColorSpinner"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-
-        app:layout_constraintTop_toBottomOf="@id/charSecondNameEditText"
-        app:layout_constraintStart_toStartOf="parent"
+        android:gravity="center_horizontal"
+        app:layout_constraintWidth_percent="0.5"
+        app:layout_constraintTop_toBottomOf="@+id/charSecondNameEditText"
+        app:layout_constraintStart_toEndOf="@+id/mantleColorText"
         app:layout_constraintEnd_toEndOf="parent"
         />
 
@@ -69,7 +84,7 @@
         app:layout_constraintWidth_percent="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/confirmSheetButton"
-        android:onClick="confirmSheet"
+        android:onClick="addCharacterPic"
         />
 
     <Button
@@ -82,7 +97,7 @@
         app:layout_constraintWidth_percent="0.5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/characterPicButton"
-        android:onClick="addCharacterPic"
+        android:onClick="confirmSheet"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

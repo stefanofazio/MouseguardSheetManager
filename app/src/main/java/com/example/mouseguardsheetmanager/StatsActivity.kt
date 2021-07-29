@@ -1,43 +1,53 @@
 package com.example.mouseguardsheetmanager
 
-import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 
 
 class StatsActivity : AppCompatActivity() {
 
     private lateinit var receivedStats : HashMap<String, Int>
+    private lateinit var editTextList : MutableList<Pair<EditText, EditText>>
     private var statsList : MutableList<Pair<String, Int>> = mutableListOf<Pair<String, Int>>()
 
-    private lateinit var statsListView: ListView
-    private lateinit var addStatButton: Button
     private lateinit var confirmStatsButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_stats)
 
-        statsListView = findViewById(R.id.statsListView)
-        addStatButton = findViewById(R.id.addStatButton)
         confirmStatsButton = findViewById(R.id.confirmStatsButton)
+        getEditText()
 
         receivedStats = intent.getSerializableExtra("stats") as HashMap<String, Int>
         statsList = getListFromHashMap(receivedStats)
-
-        RefreshList()
-
+        setContent()
     }
 
-    private fun RefreshList()
+    private fun setContent()
     {
-        var myAdapter = statsAdapter(this, statsList)
-        statsListView.adapter = myAdapter
+        for (i in 0..Math.min(editTextList.count(), statsList.count()) - 1)
+        {
+            editTextList[i].first.setText(statsList[i].first)
+            editTextList[i].second.setText(statsList[i].second.toString())
+        }
+    }
 
+    private fun getEditText()
+    {
+        editTextList = mutableListOf<Pair<EditText, EditText>>()
+        editTextList.add(Pair(findViewById(R.id.stat1NameEditText), findViewById(R.id.stat1ValueEditText)))
+        editTextList.add(Pair(findViewById(R.id.stat2NameEditText), findViewById(R.id.stat2ValueEditText)))
+        editTextList.add(Pair(findViewById(R.id.stat3NameEditText), findViewById(R.id.stat3ValueEditText)))
+        editTextList.add(Pair(findViewById(R.id.stat4NameEditText), findViewById(R.id.stat4ValueEditText)))
+        editTextList.add(Pair(findViewById(R.id.stat5NameEditText), findViewById(R.id.stat5ValueEditText)))
+        editTextList.add(Pair(findViewById(R.id.stat6NameEditText), findViewById(R.id.stat6ValueEditText)))
+        editTextList.add(Pair(findViewById(R.id.stat7NameEditText), findViewById(R.id.stat7ValueEditText)))
+        editTextList.add(Pair(findViewById(R.id.stat8NameEditText), findViewById(R.id.stat8ValueEditText)))
+        editTextList.add(Pair(findViewById(R.id.stat9NameEditText), findViewById(R.id.stat9ValueEditText)))
     }
 
     private fun getListFromHashMap(data : HashMap<String, Int>) : MutableList<Pair<String, Int>>
@@ -62,39 +72,32 @@ class StatsActivity : AppCompatActivity() {
         return returnValue
     }
 
-    fun addStat(view:View?)
+    private fun getValuesFromEditText() : MutableList<Pair<String, Int>>
     {
-        statsList.add(Pair<String, Int>("", 0))
+        var returnList = mutableListOf<Pair<String, Int>>()
+        for (element in editTextList)
+        {
+            if (element.first.text.isNotEmpty() and isNumber(element.second.text.toString()))
+            {
+                returnList.add(Pair<String, Int>(element.first.text.toString(), element.second.text.toString().toInt()))
+            }
+        }
+        return returnList
+    }
+
+    private fun isNumber(s : String) : Boolean
+    {
+        return if (s.isNullOrEmpty()) false else s.all { Character.isDigit(it) }
     }
 
     fun confirmStats(view:View?)
     {
+        statsList = getValuesFromEditText()
         var newStats = getHashMapFromList(statsList)
-
+        val returnIntent = Intent()
+        returnIntent.putExtra("stats", newStats)
+        setResult(RESULT_OK, returnIntent)
+        finish()
     }
 
-    class statsAdapter(private val context: Context, private val elements: List<Pair<String, Int>>) : BaseAdapter()
-    {
-        override fun getCount(): Int {
-            return elements.count()
-        }
-
-        override fun getItem(position: Int): Any {
-            return position
-        }
-
-        override fun getItemId(position: Int): Long {
-            return position.toLong()
-        }
-
-        override fun getView(Position: Int, convertView: View?, parent: ViewGroup?): View {
-            val rowView = LayoutInflater.from(context).inflate(R.layout.stats_row, parent, false)
-            val stat = elements[Position]
-            var statName: EditText = rowView.findViewById(R.id.statNameEditText)
-            var statValue: EditText = rowView.findViewById(R.id.statValueEditText)
-            statName.setText(stat.first)
-            statValue.setText(stat.second.toString())
-            return rowView
-        }
-    }
 }

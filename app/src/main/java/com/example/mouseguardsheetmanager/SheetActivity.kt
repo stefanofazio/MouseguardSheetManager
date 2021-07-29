@@ -45,7 +45,7 @@ class SheetActivity : AppCompatActivity() {
             setGameSheetListener(gameID, mAuth.currentUser?.email)
         }
 
-
+        SetListListeners()
 
     }
 
@@ -80,7 +80,7 @@ class SheetActivity : AppCompatActivity() {
 
     private fun openSheet(sheet : Sheet)
     {
-        val intent = Intent(this, SheetActivity::class.java)
+        val intent = Intent(this, SheetEditActivity::class.java)
         intent.putExtra("sheetID", sheet.sheetID)
         intent.putExtra("role", role)
         startActivity(intent)
@@ -128,7 +128,9 @@ class SheetActivity : AppCompatActivity() {
 
     fun sheetButton(view : View?)
     {
-
+        val sheetIntent = Intent(this, SheetEditActivity::class.java)
+        sheetIntent.putExtra("sheetID", "")
+        startActivity(sheetIntent)
     }
 }
 
@@ -152,7 +154,7 @@ class SheetAdapter(private val context: Context, private val elements: List<Shee
         var characterName: TextView = rowView.findViewById(R.id.character_Name)
         var mantleColor: TextView = rowView.findViewById(R.id.mantle_Color)
         characterName.text = java.lang.String.format(context.getString(R.string.gameName),sheet.characterName)
-        mantleColor.text = java.lang.String.format(context.getString(R.string.masterName),sheet.mantleColor)
+        mantleColor.text = java.lang.String.format(context.getString(R.string.masterName),sheet.mantleColor.toString())
         //playerNumber.text = java.lang.String.format(context.getString(R.string.playerNumber),game.players.count().toString())
         return rowView
     }

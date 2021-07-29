@@ -28,4 +28,9 @@
     <string name="green">Green</string>
     <string name="yellow">Yellow</string>
     <string name="black">Black</string>
+    <string name="confirm_stats">Confirm Stats</string>
+    <string name="stat_name">Stat name</string>
+    <string name="stat_value">Stat value</string>
+    <string name="create_sheet">Create sheet</string>
+    <string name="mantle_color">Mantle color:</string>
 </resources>

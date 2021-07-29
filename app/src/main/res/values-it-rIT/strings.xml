@@ -29,4 +29,9 @@
     <string name="green">Verde</string>
     <string name="yellow">Giallo</string>
     <string name="black">Nero</string>
+    <string name="confirm_stats">Conferma statistiche</string>
+    <string name="stat_name">Nome statistica</string>
+    <string name="stat_value">Valore statistica</string>
+    <string name="create_sheet">Crea scheda</string>
+    <string name="mantle_color">Colore mantello:</string>
 </resources>

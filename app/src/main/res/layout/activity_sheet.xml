@@ -26,6 +26,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHeight_percent="0.1"
         android:onClick="sheetButton"
+        android:hint="@string/create_sheet"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

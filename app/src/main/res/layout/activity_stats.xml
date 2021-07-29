@@ -7,26 +7,202 @@
     android:background="@color/burntPaper"
     tools:context=".StatsActivity">
 
-    <ListView
-        android:id="@+id/statsListView"
-        android:layout_width="match_parent"
+    <EditText
+        android:id="@+id/stat1NameEditText"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintHeight_percent="0.8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.8"
+        app:layout_constraintHeight_percent="0.1"
+        android:hint="@string/stat_name"
         />
 
-    <Button
-        android:id="@+id/addStatButton"
-        android:layout_width="match_parent"
+    <EditText
+        android:id="@+id/stat1ValueEditText"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintHeight_percent="0.1"
-        app:layout_constraintTop_toBottomOf="@id/statsListView"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:hint="@string/add_stat"
-        android:onClick="addStat"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.2"
+        app:layout_constraintHeight_percent="0.1"
+        android:hint="@string/stat_value"
+        />
+
+    <EditText
+        android:id="@+id/stat2NameEditText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/stat1NameEditText"
+        app:layout_constraintWidth_percent="0.8"
+        app:layout_constraintHeight_percent="0.1"
+        android:hint="@string/stat_name"
+        />
+
+    <EditText
+        android:id="@+id/stat2ValueEditText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/stat1NameEditText"
+        app:layout_constraintWidth_percent="0.2"
+        app:layout_constraintHeight_percent="0.1"
+        android:hint="@string/stat_value"
+        />
+
+    <EditText
+        android:id="@+id/stat3NameEditText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/stat2NameEditText"
+        app:layout_constraintWidth_percent="0.8"
+        app:layout_constraintHeight_percent="0.1"
+        android:hint="@string/stat_name"
+        />
+
+    <EditText
+        android:id="@+id/stat3ValueEditText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/stat2NameEditText"
+        app:layout_constraintWidth_percent="0.2"
+        app:layout_constraintHeight_percent="0.1"
+        android:hint="@string/stat_value"
+        />
+
+    <EditText
+        android:id="@+id/stat4NameEditText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/stat3NameEditText"
+        app:layout_constraintWidth_percent="0.8"
+        app:layout_constraintHeight_percent="0.1"
+        android:hint="@string/stat_name"
+        />
+
+    <EditText
+        android:id="@+id/stat4ValueEditText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/stat3NameEditText"
+        app:layout_constraintWidth_percent="0.2"
+        app:layout_constraintHeight_percent="0.1"
+        android:hint="@string/stat_value"
+        />
+
+    <EditText
+        android:id="@+id/stat5NameEditText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/stat4NameEditText"
+        app:layout_constraintWidth_percent="0.8"
+        app:layout_constraintHeight_percent="0.1"
+        android:hint="@string/stat_name"
+        />
+
+    <EditText
+        android:id="@+id/stat5ValueEditText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/stat4NameEditText"
+        app:layout_constraintWidth_percent="0.2"
+        app:layout_constraintHeight_percent="0.1"
+        android:hint="@string/stat_value"
+        />
+
+    <EditText
+        android:id="@+id/stat6NameEditText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/stat5NameEditText"
+        app:layout_constraintWidth_percent="0.8"
+        app:layout_constraintHeight_percent="0.1"
+        android:hint="@string/stat_name"
+        />
+
+    <EditText
+        android:id="@+id/stat6ValueEditText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/stat5NameEditText"
+        app:layout_constraintWidth_percent="0.2"
+        app:layout_constraintHeight_percent="0.1"
+        android:hint="@string/stat_value"
+        />
+
+    <EditText
+        android:id="@+id/stat7NameEditText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/stat6NameEditText"
+        app:layout_constraintWidth_percent="0.8"
+        app:layout_constraintHeight_percent="0.1"
+        android:hint="@string/stat_name"
+        />
+
+    <EditText
+        android:id="@+id/stat7ValueEditText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/stat6NameEditText"
+        app:layout_constraintWidth_percent="0.2"
+        app:layout_constraintHeight_percent="0.1"
+        android:hint="@string/stat_value"
+        />
+
+    <EditText
+        android:id="@+id/stat8NameEditText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/stat7NameEditText"
+        app:layout_constraintWidth_percent="0.8"
+        app:layout_constraintHeight_percent="0.1"
+        android:hint="@string/stat_name"
+        />
+
+    <EditText
+        android:id="@+id/stat8ValueEditText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/stat7NameEditText"
+        app:layout_constraintWidth_percent="0.2"
+        app:layout_constraintHeight_percent="0.1"
+        android:hint="@string/stat_value"
+        />
+
+    <EditText
+        android:id="@+id/stat9NameEditText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/stat8NameEditText"
+        app:layout_constraintWidth_percent="0.8"
+        app:layout_constraintHeight_percent="0.1"
+        android:hint="@string/stat_name"
+        />
+
+    <EditText
+        android:id="@+id/stat9ValueEditText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/stat8NameEditText"
+        app:layout_constraintWidth_percent="0.2"
+        app:layout_constraintHeight_percent="0.1"
+        android:hint="@string/stat_value"
         />
 
     <Button
@@ -34,7 +210,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintHeight_percent="0.1"
-        app:layout_constraintTop_toBottomOf="@id/addStatButton"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:hint="@string/confirm_stats"

@@ -5,7 +5,7 @@ class Sheet {
     var sheetID : String = "0"
     var characterName:String = ""
     var characterSecondName:String = ""
-    var mantleColor:String = ""
+    var mantleColor:Int = 0
     var ownerEmail:String = ""
     var ownerName:String = ""
     lateinit var usedInGames : HashMap<String, String>
@@ -13,10 +13,11 @@ class Sheet {
 
     constructor()
     {
-
+        stats = HashMap()
+        usedInGames = HashMap()
     }
 
-    constructor(id:String, name : String, secondName:String, mantle : String, owner : String, email : String)
+    constructor(id:String, name : String, secondName:String, mantle : Int, owner : String, email : String)
     {
         this.sheetID = id
         this.characterName = name
@@ -28,7 +29,7 @@ class Sheet {
         stats = HashMap()
     }
 
-    constructor(id:String, name : String, secondName:String, mantle : String, owner : String, email : String, games : HashMap<String, String>, skills : HashMap<String, Int>)
+    constructor(id:String, name : String, secondName:String, mantle : Int, owner : String, email : String, games : HashMap<String, String>, skills : HashMap<String, Int>)
     {
         this.sheetID = id
         this.characterName = name
