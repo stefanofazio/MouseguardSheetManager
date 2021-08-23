@@ -14,6 +14,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.widget.*
 import com.google.firebase.database.*
@@ -43,7 +44,7 @@ class SheetEditActivity : AppCompatActivity() {
     private var currentUserName : String = ""
 
     //private var mantleColors : ArrayList<String> = arrayListOf(getString(R.string.red), getString(R.string.yellow), getString(R.string.black), getString(R.string.green))
-    public var mantleColors : ArrayList<String> = arrayListOf()
+    var mantleColors : ArrayList<String> = arrayListOf()
 
     private lateinit var characterPicImageView : ImageView
     private lateinit var charNameEditText: EditText
@@ -78,9 +79,10 @@ class SheetEditActivity : AppCompatActivity() {
         setUserNameListener()
 
         sheetID = intent.getStringExtra("sheetID").toString()
-        if (!sheetID.isNullOrEmpty())
+        if (!sheetID.isNullOrEmpty()) {
             RetrieveSheetData(sheetID)
-            //charPic = RetrieveCharPic(sheetID)
+            RetrieveCharPic(sheetID)
+        }
     }
 
     private fun populateSpinner()
@@ -92,10 +94,19 @@ class SheetEditActivity : AppCompatActivity() {
 
     private fun RetrieveCharPic(id : String)
     {
-        if (false)
-            isPicPresent = false
-        else
+        val ONE_MEGABYTE : Long = 1024 * 1024
+
+
+        mStorage.child("proPics").child(sheetID).getBytes(ONE_MEGABYTE).addOnSuccessListener {
+            charPic = BitmapFactory.decodeByteArray(it, 0, it.size);
             isPicPresent = true
+            characterPicImageView.setImageBitmap(charPic)
+        }.addOnFailureListener{
+            charPic = createBitmap(1, 1)
+            isPicPresent = false
+            //characterPicImageView.setImageBitmap(charPic)
+        }
+
 
     }
 

@@ -13,6 +13,12 @@ import android.widget.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.gson.Gson
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import androidx.core.graphics.createBitmap
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.*
+import com.google.firebase.storage.ktx.storage
 
 class SheetActivity : AppCompatActivity() {
 
@@ -21,8 +27,11 @@ class SheetActivity : AppCompatActivity() {
 
     private lateinit var mDatabase: DatabaseReference
     private lateinit var mAuth: FirebaseAuth
+    private lateinit var mStorage: StorageReference
 
     private lateinit var sheetListView: ListView
+    val images = mutableListOf<Bitmap>()
+    val sheetsWithPic = mutableListOf<String>()
     private var sheets = mutableListOf<Sheet>()
     private var gson = Gson()
 
@@ -35,6 +44,7 @@ class SheetActivity : AppCompatActivity() {
 
         mDatabase = FirebaseDatabase.getInstance().reference
         mAuth = FirebaseAuth.getInstance()
+        mStorage = Firebase.storage.reference
 
         if (role.equals("master")) {
             gameID = intent.getStringExtra("gameID").toString()
@@ -108,7 +118,8 @@ class SheetActivity : AppCompatActivity() {
                     }
                 }
                 sheets = allSheets
-                SetListViewContent()
+                GetCharPics(sheets)
+                //SetListViewContent()
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -120,9 +131,26 @@ class SheetActivity : AppCompatActivity() {
 
     }
 
+    private fun GetCharPics(sheets : List<Sheet>)
+    {
+        for (element in sheets)
+        {
+            val sheetID = element.sheetID
+            mStorage.child("proPics").child(sheetID).getBytes(1024 * 1024).addOnSuccessListener {
+                images.add(BitmapFactory.decodeByteArray(it, 0, it.size) )
+                sheetsWithPic.add(sheetID)
+                SetListViewContent()
+            }.addOnFailureListener{
+
+            }
+        }
+
+
+    }
+
     private fun SetListViewContent()
     {
-        var myAdapter = SheetAdapter(this, sheets)
+        var myAdapter = SheetAdapter(this, sheets, images, sheetsWithPic)
         sheetListView.adapter = myAdapter
     }
 
@@ -134,7 +162,7 @@ class SheetActivity : AppCompatActivity() {
     }
 }
 
-class SheetAdapter(private val context: Context, private val elements: List<Sheet>) : BaseAdapter()
+class SheetAdapter(private val context: Context, private val elements: List<Sheet>, private val images : List<Bitmap>, private val sheetsWithPic : List<String>) : BaseAdapter()
 {
     override fun getCount(): Int {
         return elements.count()
@@ -155,9 +183,13 @@ class SheetAdapter(private val context: Context, private val elements: List<Shee
         val sheet = elements[Position]
         var characterName: TextView = rowView.findViewById(R.id.character_Name)
         var mantleColor: TextView = rowView.findViewById(R.id.mantle_Color)
+        var charPic : ImageView = rowView.findViewById(R.id.characterPic)
         characterName.text = java.lang.String.format(context.getString(R.string.characterName),sheet.characterName)
         mantleColor.text = java.lang.String.format(context.getString(R.string.mantle_color),mantleColors[sheet.mantleColor])
-        //playerNumber.text = java.lang.String.format(context.getString(R.string.playerNumber),game.players.count().toString())
+        if (sheetsWithPic.contains(sheet.sheetID))
+        {
+            charPic.setImageBitmap(images[sheetsWithPic.indexOf(sheet.sheetID)])
+        }
         return rowView
     }
 }
