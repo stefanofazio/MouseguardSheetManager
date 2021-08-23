@@ -32,5 +32,7 @@
     <string name="stat_name">Stat name</string>
     <string name="stat_value">Stat value</string>
     <string name="create_sheet">Create sheet</string>
-    <string name="mantle_color">Mantle color:</string>
+    <string name="mantle_color">Mantle color: %1$s</string>
+    <string name="characterName">Character name:  %1$s</string>
+    <string name="mantleColor">Mantle color:</string>
 </resources>

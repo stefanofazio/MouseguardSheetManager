@@ -1,4 +1,6 @@
+import android.content.Context
 import kotlin.random.Random
+
 
 class Utils {
     companion object {
@@ -8,6 +10,7 @@ class Utils {
             newJSON = newJSON.removeRange(0, newJSON.indexOf("{"))
             return newJSON
         }
+
 
         fun IDGeneration(item : String) : String
         {

@@ -149,12 +149,14 @@ class SheetAdapter(private val context: Context, private val elements: List<Shee
     }
 
     override fun getView(Position: Int, convertView: View?, parent: ViewGroup?): View {
+        var mantleColors : ArrayList<String> = arrayListOf()
+        mantleColors = arrayListOf(context.getString(R.string.red),context.getString(R.string.yellow),context.getString(R.string.black),context.getString(R.string.green))
         val rowView = LayoutInflater.from(context).inflate(R.layout.sheet_row, parent, false)
         val sheet = elements[Position]
         var characterName: TextView = rowView.findViewById(R.id.character_Name)
         var mantleColor: TextView = rowView.findViewById(R.id.mantle_Color)
-        characterName.text = java.lang.String.format(context.getString(R.string.gameName),sheet.characterName)
-        mantleColor.text = java.lang.String.format(context.getString(R.string.masterName),sheet.mantleColor.toString())
+        characterName.text = java.lang.String.format(context.getString(R.string.characterName),sheet.characterName)
+        mantleColor.text = java.lang.String.format(context.getString(R.string.mantle_color),mantleColors[sheet.mantleColor])
         //playerNumber.text = java.lang.String.format(context.getString(R.string.playerNumber),game.players.count().toString())
         return rowView
     }

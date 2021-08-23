@@ -33,5 +33,7 @@
     <string name="stat_name">Nome statistica</string>
     <string name="stat_value">Valore statistica</string>
     <string name="create_sheet">Crea scheda</string>
-    <string name="mantle_color">Colore mantello:</string>
+    <string name="mantle_color">Colore mantello: %1$s</string>
+    <string name="characterName">Nome personaggio:  %1$s</string>
+    <string name="mantleColor">Colore mantello:</string>
 </resources>
