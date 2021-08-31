@@ -36,4 +36,5 @@
     <string name="mantle_color">Colore mantello: %1$s</string>
     <string name="characterName">Nome personaggio:  %1$s</string>
     <string name="mantleColor">Colore mantello:</string>
+    <string name="failed_to_join">Impossibile unirsi alla partita</string>
 </resources>

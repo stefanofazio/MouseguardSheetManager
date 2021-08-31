@@ -51,8 +51,14 @@ class SheetActivity : AppCompatActivity() {
             setGameSheetListener(gameID, "")
         }
         else {
-            gameID = ""
-            setGameSheetListener(gameID, mAuth.currentUser?.email)
+            if (intent.hasExtra("gameID")) {
+                gameID = intent.getStringExtra("gameID").toString()
+                setGameSheetListener(gameID, mAuth.currentUser?.email)
+            }
+            else {
+                gameID = ""
+                setGameSheetListener(gameID, mAuth.currentUser?.email)
+            }
         }
 
         SetListListeners()
@@ -106,15 +112,21 @@ class SheetActivity : AppCompatActivity() {
                     var tmpSheet = Sheet()
                     val tmpJson = Utils.AdaptToJSON(i.toString())
                     tmpSheet = gson.fromJson<Sheet>(tmpJson, Sheet::class.java)
-                    if (!email.isNullOrEmpty())
+                    if (!email.isNullOrEmpty() && id.isNotEmpty())
                     {
-                        if (tmpSheet.ownerEmail.equals(email))
+                        if (tmpSheet.ownerEmail.equals(email) && tmpSheet.usedInGames.containsKey(id))
+                        {
                             allSheets.add(tmpSheet)
+                        }
                     }
-                    else
-                    {
-                        if (tmpSheet.usedInGames.containsKey(id))
-                            allSheets.add(tmpSheet)
+                    else {
+                        if (!email.isNullOrEmpty()) {
+                            if (tmpSheet.ownerEmail.equals(email))
+                                allSheets.add(tmpSheet)
+                        } else {
+                            if (tmpSheet.usedInGames.containsKey(id))
+                                allSheets.add(tmpSheet)
+                        }
                     }
                 }
                 sheets = allSheets
@@ -156,9 +168,19 @@ class SheetActivity : AppCompatActivity() {
 
     fun sheetButton(view : View?)
     {
-        val sheetIntent = Intent(this, SheetEditActivity::class.java)
-        sheetIntent.putExtra("sheetID", "")
-        startActivity(sheetIntent)
+        if (role.equals("player") && gameID.isNotEmpty())
+        {
+            val addSheetToGameIntent = Intent (this, SheetActivity::class.java)
+            addSheetToGameIntent.putExtra("gameID", gameID)
+            addSheetToGameIntent.putExtra("role", role)
+            addSheetToGameIntent.putExtra("isForResult", true)
+            startActivityForResult(addSheetToGameIntent, 10)
+        }
+        else {
+            val sheetIntent = Intent(this, SheetEditActivity::class.java)
+            sheetIntent.putExtra("sheetID", "")
+            startActivity(sheetIntent)
+        }
     }
 }
 

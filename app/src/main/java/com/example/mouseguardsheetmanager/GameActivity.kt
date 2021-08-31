@@ -13,6 +13,7 @@ import android.graphics.Paint
 import android.nfc.NfcAdapter
 import android.util.Log
 import android.widget.*
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.gson.Gson
 import kotlinx.coroutines.selects.select
@@ -22,6 +23,8 @@ class GameActivity : AppCompatActivity() {
     private lateinit var gamesList:ListView
     private lateinit var gamesButton: Button
     private lateinit var mDatabase:DatabaseReference
+    private lateinit var mAuth : FirebaseAuth
+
     private var role: String = ""
     private var gson = Gson()
 
@@ -36,6 +39,7 @@ class GameActivity : AppCompatActivity() {
         gamesButton = findViewById(R.id.gamesButton)
         role = intent.getStringExtra("role").toString()
         mDatabase = FirebaseDatabase.getInstance().reference
+        mAuth = FirebaseAuth.getInstance()
         setButtonText()
         SetEventListener()
         SetListListeners()
@@ -43,18 +47,15 @@ class GameActivity : AppCompatActivity() {
 
     fun gamesButton(view:View?)
     {
-        if (role.equals("master"))
-        {
-            val intent = Intent(this, NewGameActivity::class.java)
-            intent.putExtra("role", role)
-            startActivity(intent)
-        }
+        val intent = Intent(this, NewGameActivity::class.java)
+        intent.putExtra("role", role)
+        startActivity(intent)
     }
 
     private fun setButtonText()
     {
-        if (role == "master") { gamesButton.text = "Crea" }
-        else { gamesButton.text = "Unisciti" }
+        if (role == "master") { gamesButton.text = getString(R.string.createGame) }
+        else { gamesButton.text = getString(R.string.join) }
     }
 
     private fun SetListListeners()
@@ -81,7 +82,8 @@ class GameActivity : AppCompatActivity() {
                     presentGames.add(tmpGame)
                 }
                 games = presentGames
-                SetListContentView()
+                GetUserName()
+                //SetListContentView()
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -93,9 +95,41 @@ class GameActivity : AppCompatActivity() {
         //var myAdapter = GameAdapter(this, games)
     }
 
-    private fun SetListContentView()
+    private fun GetUserName()
     {
-        var myAdapter = GameAdapter(this, games)
+        val nameListener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val playerName = snapshot.getValue().toString()
+                SetListContentView(playerName)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.w("NewGame","loadOnName:cancelled", error.toException())
+            }
+        }
+        mDatabase.child("Users").child(mAuth.currentUser?.uid.toString()).child("name").addValueEventListener(nameListener)
+    }
+
+    private fun SetListContentView(name : String)
+    {
+        var effectiveGames = mutableListOf<GameClass>()
+        for (element in games)
+        {
+            if (role.equals("master"))
+            {
+                if (element.gameOwnerEmail.equals(mAuth.currentUser?.email))
+                    effectiveGames.add(element)
+            }
+            else
+            {
+                if (!element.players.isNullOrEmpty())
+                {
+                    if (element.players.containsKey(name))
+                        effectiveGames.add(element)
+                }
+            }
+        }
+        var myAdapter = GameAdapter(this, effectiveGames)
         gamesList.adapter = myAdapter
     }
 
@@ -121,7 +155,7 @@ class GameActivity : AppCompatActivity() {
 
     private fun OpenGameForPlayer(game: GameClass)
     {
-        val intent = Intent(this, JoinGameActivity::class.java)
+        val intent = Intent(this, SheetActivity::class.java)
         intent.putExtra("gameID", game.gameID)
         intent.putExtra("role", "player")
         startActivity(intent)

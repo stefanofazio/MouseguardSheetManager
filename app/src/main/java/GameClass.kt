@@ -6,7 +6,7 @@ class GameClass {
     var gameOwnerName:String = ""
     var gameOwnerEmail:String = ""
     var gameID:String = "0"
-    lateinit var players: HashMap<String, String>
+    var players: HashMap<String, String> = HashMap()
 
     constructor()
     {

@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.core.view.isVisible
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -38,55 +39,49 @@ class NewGameActivity : AppCompatActivity() {
         newGameName = findViewById(R.id.newGameNameEditText)
         numberOfPlayers = findViewById(R.id.playerNumberEditText)
 
-        uidEditText.isVisible = false
-        numberOfPlayers.isVisible = false
-
         mDatabase = FirebaseDatabase.getInstance().reference
         mAuth = FirebaseAuth.getInstance()
 
-        SetListeners()
-
         role = intent.getStringExtra("role").toString()
 
-    }
+        if (role.equals("master")) {
+            functionButton.setText(getString(R.string.createGame))
+        }
+        else
+            functionButton.setText(getString(R.string.join))
 
-    private fun SetListeners()
-    {
-        uidEditText.addTextChangedListener(object : TextWatcher{
-            override fun afterTextChanged(s: Editable?) {
-                if (uidEditText.text.isNotEmpty())
-                {
-                    when(role) {
-                        "master" -> functionButton.text = getString(R.string.sheets)
-                        "player" -> functionButton.text = getString(R.string.join)
-                    }
-                }
-                else{
-                    when(role) {
-                        "master" -> functionButton.text = getString(R.string.createGame)
-                        "player" -> functionButton.text = ""
-                    }
-                }
-            }
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                return
-            }
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                return
-            }
-        })
     }
 
     fun newGameFunction(view:View?)
     {
-        if (uidEditText.text.isEmpty())
+        when(role)
         {
-            when(role)
-            {
-                "master" -> createGame()
+            "master" -> createGame()
+            "player" -> joinGame()
+        }
+    }
+
+    private fun joinGame()
+    {
+        if (uidEditText.text.isNotEmpty())
+        {
+            val ownerEmail = mAuth.currentUser?.email.toString()
+            val uid = uidEditText.text.toString().trim()
+            val nameListener = object : ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val playerName = snapshot.getValue().toString()
+                    //numberOfPlayers.setText(snapshot.getValue().toString())
+                    InsertInGame(playerName, ownerEmail, uid)
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Log.w("NewGame","loadOnName:cancelled", error.toException())
+                }
             }
+            mDatabase.child("Users").child(mAuth.currentUser?.uid.toString()).child("name").addValueEventListener(nameListener)
+
         }
     }
 
@@ -121,6 +116,26 @@ class NewGameActivity : AppCompatActivity() {
     {
         val md = MessageDigest.getInstance("MD5")
         return BigInteger(1, md.digest(item.toByteArray())).toString(16).padStart(10, '0')
+    }
+
+    private fun InsertInGame(name: String, email:String, uid:String)
+    {
+        mDatabase.child("Games").child(uid).child("players").child(name).setValue(email).addOnCompleteListener(this) { task2 ->
+            if (task2.isSuccessful) {
+                Log.w("succ","success")
+                finish()
+            }
+            else {
+                var t = Toast(this)
+                t.setText(getString(R.string.failed_to_join))
+                t.show()
+                Log.w(
+                    "SigninActivity",
+                    "createUserWithEmail:Failure",
+                    task2.exception
+                )
+            }
+        }
     }
 
     private fun InsertNewGame(newGame:GameClass)
