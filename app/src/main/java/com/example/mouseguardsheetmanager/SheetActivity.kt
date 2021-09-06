@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import Sheet
+import android.app.Activity
 import android.content.Intent
 import android.util.Log
 import android.widget.*
@@ -24,6 +25,7 @@ class SheetActivity : AppCompatActivity() {
 
     private lateinit var role : String
     private lateinit var gameID : String
+    private var isForResult : Boolean = false
 
     private lateinit var mDatabase: DatabaseReference
     private lateinit var mAuth: FirebaseAuth
@@ -45,6 +47,11 @@ class SheetActivity : AppCompatActivity() {
         mDatabase = FirebaseDatabase.getInstance().reference
         mAuth = FirebaseAuth.getInstance()
         mStorage = Firebase.storage.reference
+
+        if (intent.hasExtra("isForResult"))
+        {
+            isForResult = true
+        }
 
         if (role.equals("master")) {
             gameID = intent.getStringExtra("gameID").toString()
@@ -90,7 +97,28 @@ class SheetActivity : AppCompatActivity() {
         sheetListView.onItemClickListener = AdapterView.OnItemClickListener{
                 parent, view, position, id ->
             val selectedSheet = sheets[position]
-            openSheet(selectedSheet)
+            if (isForResult)
+            {
+                val returnIntent = Intent()
+                returnIntent.putExtra("sheetID", selectedSheet.sheetID.toString())
+                setResult(RESULT_OK, returnIntent)
+                finish()
+            }
+            else {
+                openSheet(selectedSheet)
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 10)
+        {
+            if (resultCode == Activity.RESULT_OK)
+            {
+                var sheetID = data?.getStringExtra("sheetID").toString()
+                insertSheetInGame(gameID, sheetID)
+            }
         }
     }
 
@@ -171,7 +199,6 @@ class SheetActivity : AppCompatActivity() {
         if (role.equals("player") && gameID.isNotEmpty())
         {
             val addSheetToGameIntent = Intent (this, SheetActivity::class.java)
-            addSheetToGameIntent.putExtra("gameID", gameID)
             addSheetToGameIntent.putExtra("role", role)
             addSheetToGameIntent.putExtra("isForResult", true)
             startActivityForResult(addSheetToGameIntent, 10)
@@ -180,6 +207,50 @@ class SheetActivity : AppCompatActivity() {
             val sheetIntent = Intent(this, SheetEditActivity::class.java)
             sheetIntent.putExtra("sheetID", "")
             startActivity(sheetIntent)
+        }
+    }
+
+    private fun insertSheetInGame(game_id : String, sheet_id : String)
+    {
+        var needToUpdate = true
+        val singleSheetListener = object : ValueEventListener
+        {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (needToUpdate) {
+                    for (i in snapshot.children) {
+                        var tmpSheet = Sheet()
+                        var tmpJson = Utils.AdaptToJSON(i.toString())
+                        tmpSheet = gson.fromJson<Sheet>(tmpJson, Sheet::class.java)
+                        if (tmpSheet.sheetID.equals(sheet_id))
+                        {
+                            tmpSheet.addToGame(game_id)
+                            updateSheet(tmpSheet)
+                        }
+                    }
+                }
+                needToUpdate = false
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.w("Sheet","loadOnName:cancelled", error.toException())
+            }
+        }
+
+        mDatabase.child("Sheets").addValueEventListener(singleSheetListener)
+    }
+
+    private fun updateSheet(new_sheet : Sheet)
+    {
+        mDatabase.child("Sheets").child(new_sheet.sheetID).setValue(new_sheet).addOnCompleteListener(this) { task2 ->
+            if (task2.isSuccessful) {
+                Log.w("succ", "success")
+            } else {
+                Log.w(
+                    "SigninActivity",
+                    "createUserWithEmail:Failure",
+                    task2.exception
+                )
+            }
         }
     }
 }

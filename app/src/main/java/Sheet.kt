@@ -41,9 +41,6 @@ class Sheet {
         this.stats = skills
     }
 
-
-
-
     fun addToGame(id : String)
     {
         this.usedInGames[id] = "si"
