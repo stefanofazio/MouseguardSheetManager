@@ -37,4 +37,6 @@
     <string name="characterName">Nome personaggio:  %1$s</string>
     <string name="mantleColor">Colore mantello:</string>
     <string name="failed_to_join">Impossibile unirsi alla partita</string>
+    <string name="shareGame">Condividi partita</string>
+    <string name="add_sheet">Aggiungi scheda</string>
 </resources>

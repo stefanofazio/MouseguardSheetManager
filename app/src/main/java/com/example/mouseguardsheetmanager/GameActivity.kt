@@ -147,16 +147,20 @@ class GameActivity : AppCompatActivity() {
 
     private fun OpenGameForMaster(game : GameClass)
     {
-        val intent = Intent(this, SheetActivity::class.java)
-        intent.putExtra("gameID", game.gameID)
+        val intent = Intent(this, NewGameActivity::class.java)
+        intent.putExtra("gameUID", game.gameID)
+        intent.putExtra("playerNumber", game.players.count())
+        intent.putExtra("gameName", game.gameName)
         intent.putExtra("role", "master")
         startActivity(intent)
     }
 
     private fun OpenGameForPlayer(game: GameClass)
     {
-        val intent = Intent(this, SheetActivity::class.java)
-        intent.putExtra("gameID", game.gameID)
+        val intent = Intent(this, NewGameActivity::class.java)
+        intent.putExtra("gameUID", game.gameID)
+        intent.putExtra("playerNumber", game.players.count())
+        intent.putExtra("gameName", game.gameName)
         intent.putExtra("role", "player")
         startActivity(intent)
     }

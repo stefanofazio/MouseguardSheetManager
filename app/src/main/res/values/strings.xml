@@ -36,4 +36,6 @@
     <string name="characterName">Character name:  %1$s</string>
     <string name="mantleColor">Mantle color:</string>
     <string name="failed_to_join">Failed to join!</string>
+    <string name="shareGame">Share game</string>
+    <string name="add_sheet">Add sheet</string>
 </resources>

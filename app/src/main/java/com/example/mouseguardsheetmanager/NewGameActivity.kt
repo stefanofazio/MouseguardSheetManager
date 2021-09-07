@@ -18,6 +18,9 @@ import com.google.gson.Gson
 import java.math.BigInteger
 import java.security.MessageDigest
 import kotlin.random.Random
+import android.content.Intent
+import android.renderscript.ScriptGroup
+import android.text.InputType
 
 class NewGameActivity : AppCompatActivity() {
 
@@ -26,10 +29,14 @@ class NewGameActivity : AppCompatActivity() {
     private lateinit var functionButton: Button
     private lateinit var newGameName: EditText
     private lateinit var numberOfPlayers: EditText
+    private lateinit var shareButton: Button
 
     private lateinit var mDatabase: DatabaseReference
     private lateinit var mAuth: FirebaseAuth
 
+    private var gameUID : String = ""
+    private var playerNumber : Int = 0
+    private var gameName : String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +45,7 @@ class NewGameActivity : AppCompatActivity() {
         functionButton = findViewById(R.id.newGameFunctionButton)
         newGameName = findViewById(R.id.newGameNameEditText)
         numberOfPlayers = findViewById(R.id.playerNumberEditText)
+        shareButton = findViewById(R.id.shareGame)
 
         mDatabase = FirebaseDatabase.getInstance().reference
         mAuth = FirebaseAuth.getInstance()
@@ -45,12 +53,41 @@ class NewGameActivity : AppCompatActivity() {
         role = intent.getStringExtra("role").toString()
 
         if (role.equals("master")) {
-            functionButton.setText(getString(R.string.createGame))
+            if (intent.hasExtra("gameUID")) {
+                gameUID = intent.getStringExtra("gameUID").toString()
+                playerNumber = intent.getIntExtra("playerNumber", 0).toInt()
+                gameName = intent.getStringExtra("gameName").toString()
+                functionButton.setText(getString(R.string.sheets))
+                uidEditText.setText(gameUID)
+                uidEditText.inputType = InputType.TYPE_NULL
+                newGameName.setText(gameName)
+                newGameName.inputType = InputType.TYPE_NULL
+                numberOfPlayers.setText(playerNumber.toString())
+                numberOfPlayers.inputType = InputType.TYPE_NULL
+            }
+            else {
+                functionButton.setText(getString(R.string.createGame))
+                shareButton.isVisible = false
+            }
         }
-        else
-            functionButton.setText(getString(R.string.join))
+        else {
+            if (intent.hasExtra("gameUID")) {
+                gameUID = intent.getStringExtra("gameUID").toString()
+                playerNumber = intent.getIntExtra("playerNumber", 0).toInt()
+                gameName = intent.getStringExtra("gameName").toString()
+                functionButton.setText(getString(R.string.sheets))
+                uidEditText.setText(gameUID)
+                uidEditText.inputType = InputType.TYPE_NULL
+                newGameName.setText(gameName)
+                newGameName.inputType = InputType.TYPE_NULL
+                numberOfPlayers.setText(playerNumber.toString())
+                numberOfPlayers.inputType = InputType.TYPE_NULL
 
-
+            } else {
+                functionButton.setText(getString(R.string.join))
+            }
+            shareButton.isVisible = false
+        }
 
     }
 
@@ -58,9 +95,37 @@ class NewGameActivity : AppCompatActivity() {
     {
         when(role)
         {
-            "master" -> createGame()
-            "player" -> joinGame()
+            "master" -> if (gameUID.isNullOrEmpty()) createGame() else openGame(gameUID, role)
+            "player" -> if (gameUID.isNullOrEmpty()) joinGame() else openGame(gameUID, role)
         }
+    }
+
+
+
+    fun ShareGame(view:View?)
+    {
+        var whatsappIntent = Intent(Intent.ACTION_SEND)
+        whatsappIntent.type = "text/plain"
+        whatsappIntent.setPackage("com.whatsapp")
+        whatsappIntent.putExtra(Intent.EXTRA_TEXT, "$gameName $gameUID")
+        if (whatsappIntent.resolveActivity(packageManager) == null) {
+            Toast.makeText(this,
+                "Please install whatsapp first.",
+                Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // Starting Whatsapp
+        startActivity(whatsappIntent)
+
+    }
+
+    private fun openGame(id : String, playerRole : String)
+    {
+        var sheetIntent = Intent(this, SheetActivity::class.java)
+        sheetIntent.putExtra("gameID", id)
+        sheetIntent.putExtra("role", playerRole)
+        startActivity(sheetIntent)
     }
 
     private fun joinGame()

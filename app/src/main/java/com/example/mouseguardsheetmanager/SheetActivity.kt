@@ -17,6 +17,7 @@ import com.google.gson.Gson
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.core.graphics.createBitmap
+import androidx.core.view.isVisible
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.*
 import com.google.firebase.storage.ktx.storage
@@ -31,6 +32,8 @@ class SheetActivity : AppCompatActivity() {
     private lateinit var mAuth: FirebaseAuth
     private lateinit var mStorage: StorageReference
 
+    private lateinit var sheetButton: Button
+
     private lateinit var sheetListView: ListView
     val images = mutableListOf<Bitmap>()
     val sheetsWithPic = mutableListOf<String>()
@@ -44,6 +47,8 @@ class SheetActivity : AppCompatActivity() {
 
         role = intent.getStringExtra("role").toString()
 
+        sheetButton = findViewById(R.id.sheetButton)
+
         mDatabase = FirebaseDatabase.getInstance().reference
         mAuth = FirebaseAuth.getInstance()
         mStorage = Firebase.storage.reference
@@ -51,6 +56,7 @@ class SheetActivity : AppCompatActivity() {
         if (intent.hasExtra("isForResult"))
         {
             isForResult = true
+            sheetButton.isVisible = false
         }
 
         if (role.equals("master")) {
@@ -61,6 +67,7 @@ class SheetActivity : AppCompatActivity() {
             if (intent.hasExtra("gameID")) {
                 gameID = intent.getStringExtra("gameID").toString()
                 setGameSheetListener(gameID, mAuth.currentUser?.email)
+                sheetButton.hint = getString(R.string.add_sheet)
             }
             else {
                 gameID = ""

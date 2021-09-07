@@ -45,6 +45,20 @@
         />
 
     <Button
+        android:id="@+id/shareGame"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintWidth_percent="0.3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/playerNumberEditText"
+        android:layout_marginTop="30dp"
+        android:hint="@string/shareGame"
+        android:onClick="ShareGame"
+        />
+
+
+    <Button
         android:id="@+id/newGameFunctionButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
