@@ -17,6 +17,7 @@
         app:layout_constraintHeight_default="percent"
         android:onClick="getClick"
         android:contentDescription="player"
+        android:src="@drawable/player"
         />
 
     <ImageButton
@@ -29,6 +30,7 @@
         app:layout_constraintHeight_default="percent"
         android:onClick="getClick"
         android:contentDescription="master"
+        android:src="@drawable/master"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

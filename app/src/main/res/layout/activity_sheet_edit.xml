@@ -78,6 +78,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:hint="@string/stats"
         android:onClick="openStats"
+        android:textColor="@color/white"
         />
 
     <Button
@@ -91,6 +92,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/confirmSheetButton"
         android:onClick="addCharacterPic"
+        android:textColor="@color/white"
         />
 
     <Button
@@ -104,6 +106,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/characterPicButton"
         android:onClick="confirmSheet"
+        android:textColor="@color/white"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

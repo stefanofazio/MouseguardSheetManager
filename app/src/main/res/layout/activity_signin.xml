@@ -76,6 +76,7 @@
         app:layout_constraintWidth_percent="0.6"
         android:layout_marginTop="15dp"
         android:onClick="signIn"
+        android:textColor="@color/white"
         />
 
     <TextView

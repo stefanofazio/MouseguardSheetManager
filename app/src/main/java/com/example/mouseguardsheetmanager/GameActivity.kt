@@ -29,6 +29,7 @@ class GameActivity : AppCompatActivity() {
     private var gson = Gson()
 
     private var games : List<GameClass> = mutableListOf()
+    private var effectiveGames : List<GameClass> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -62,7 +63,7 @@ class GameActivity : AppCompatActivity() {
     {
         gamesList.onItemClickListener = AdapterView.OnItemClickListener{
             parent, view, position, id ->
-            val selectedGame = games[position]
+            val selectedGame = effectiveGames[position]
             doThingsWithGame(selectedGame)
         }
     }
@@ -112,20 +113,20 @@ class GameActivity : AppCompatActivity() {
 
     private fun SetListContentView(name : String)
     {
-        var effectiveGames = mutableListOf<GameClass>()
+        effectiveGames = mutableListOf<GameClass>()
         for (element in games)
         {
             if (role.equals("master"))
             {
                 if (element.gameOwnerEmail.equals(mAuth.currentUser?.email))
-                    effectiveGames.add(element)
+                    (effectiveGames as MutableList<GameClass>).add(element)
             }
             else
             {
                 if (!element.players.isNullOrEmpty())
                 {
                     if (element.players.containsKey(name))
-                        effectiveGames.add(element)
+                        (effectiveGames as MutableList<GameClass>).add(element)
                 }
             }
         }

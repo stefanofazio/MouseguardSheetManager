@@ -17,6 +17,7 @@
         app:layout_constraintHeight_default="percent"
         android:onClick="getClick"
         android:contentDescription="sheets"
+        android:src="@drawable/sheets"
         />
 
     <ImageButton
@@ -29,6 +30,7 @@
         app:layout_constraintHeight_default="percent"
         android:onClick="getClick"
         android:contentDescription="games"
+        android:src="@drawable/games"
         />
 
 

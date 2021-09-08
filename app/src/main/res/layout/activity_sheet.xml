@@ -27,6 +27,7 @@
         app:layout_constraintHeight_percent="0.1"
         android:onClick="sheetButton"
         android:hint="@string/create_sheet"
+        android:textColor="@color/white"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

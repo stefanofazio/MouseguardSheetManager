@@ -215,6 +215,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:hint="@string/confirm_stats"
         android:onClick="confirmStats"
+        android:textColor="@color/white"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

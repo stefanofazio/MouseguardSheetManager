@@ -55,6 +55,7 @@
         android:layout_marginTop="30dp"
         android:hint="@string/shareGame"
         android:onClick="ShareGame"
+        android:textColor="@color/white"
         />
 
 
@@ -66,6 +67,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:onClick="newGameFunction"
+        android:textColor="@color/white"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
